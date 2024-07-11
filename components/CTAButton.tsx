@@ -1,11 +1,11 @@
 "use client";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import useFormRedirect from "@hooks/useFormRedirect";
 import { cn } from "@lib/utils";
 
-type CTAButtonProps = ButtonProps &
-  (
+type CTAButtonProps = ButtonProps & {
+  handleClick: (props: any) => void;
+} & (
     | {
         source?: "influencer" | "brand";
         name: string;
@@ -19,14 +19,13 @@ type CTAButtonProps = ButtonProps &
   );
 
 const CTAButton = (props: CTAButtonProps) => {
-  const { source, name, className, ...rest } = props;
+  const { source, name, className, handleClick, ...rest } = props;
   const t = useTranslations("CTAButton");
-  const redirect = useFormRedirect();
 
   return (
     <Button
       {...rest}
-      onClick={redirect}
+      onClick={handleClick}
       className={cn("w-full sm:w-60", className)}
     >
       {name ? name : source === "influencer" ? t("influencer") : t("brand")}
