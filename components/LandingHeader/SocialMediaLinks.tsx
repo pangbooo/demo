@@ -1,67 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { MergeHeaderProps } from "@components/merge-header/MergeHeader";
-import CollaborationIdeas from "./CollaborationIdeas";
-import MobileMenu from "./MobileMenu";
-import SocialMediaLinks from "./SocialMediaLinks";
+import React from "react";
+import SvgIcon from "@/components/SvgIcon";
 
-const LandingHeader = (props: MergeHeaderProps) => {
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [defaultValue, setDefaultValue] = useState<string[]>([]);
-  const { logout } = props.profileData;
-  const selectedLayoutSegment = useSelectedLayoutSegment();
-
-  useEffect(() => {
-    setShowMobileMenu(false);
-    if (selectedLayoutSegment === "for-influencers") {
-      setDefaultValue(["influencers"]);
-    } else if (selectedLayoutSegment === "for-brands") {
-      setDefaultValue(["brands"]);
-    }
-  }, [selectedLayoutSegment]);
-
-  useEffect(() => {
-    if (showMobileMenu) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [showMobileMenu]);
-
-  const handleAccordionChange = (value: string[]) => {
-    setDefaultValue(value);
-  };
-
+const SocialMediaLinks = () => {
   return (
-    <>
-      {/* Mobile Menu */}
-      <MobileMenu
-        showMobileMenu={showMobileMenu}
-        defaultValue={defaultValue}
-        handleAccordionChange={handleAccordionChange}
-        {...props}
-      />
-
-      <div className="flex flex-col items-start p-6">
-        <h1 className="mb-2 text-center text-4xl font-bold">
-          New collaboration ideas of the day
-        </h1>
-        <p className="mb-6 text-center text-gray-600">
-          Content creators can create ideas by uploading social media content as
-          the vibe box, and pre-adding items in the post to attract new brands
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          {/* Links to Collaboration Ideas */}
-          <CollaborationIdeas {...props} />
-        </div>
+    <div className="mt-10">
+      <div className="mt-4 flex items-center gap-4">
+        <a
+          className="inline-flex p-2 text-gray-300 hover:text-[#EE1D51]"
+          target="_blank"
+          rel="noreferrer"
+          href="#"
+        >
+          <SvgIcon name="tiktok" size={18} />
+        </a>
+        <a
+          className="inline-flex p-2 text-gray-300 hover:text-[#1DA1F2]"
+          target="_blank"
+          rel="noreferrer"
+          href="https://twitter.com/AppHappin"
+        >
+          <SvgIcon name="twitter" size={18} />
+        </a>
+        <a
+          className="inline-flex p-2 text-gray-300 hover:text-[#1877F2]"
+          target="_blank"
+          rel="noreferrer"
+          href="https://www.facebook.com/HappinEventApp"
+        >
+          <SvgIcon name="facebook" size={18} />
+        </a>
+        <a
+          className="inline-flex p-2 text-gray-300 hover:text-[#E4405F]"
+          target="_blank"
+          rel="noreferrer"
+          href="https://www.instagram.com/happin.app/"
+        >
+          <SvgIcon name="instagram" size={18} />
+        </a>
       </div>
-
-      <div className="mt-10">
-        {/* Social Media Links */}
-        <SocialMediaLinks />
-      </div>
-    </>
+    </div>
   );
 };
 
-export default LandingHeader;
+export default SocialMediaLinks;

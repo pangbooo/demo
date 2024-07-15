@@ -18,6 +18,55 @@ import cn from "classnames";
 const PAGE_SIZE = 10;
 const fetch = (url: string) => fetcher(url).then((res) => res.data);
 
+type Item = {
+  sender?: {
+    photourl?: string;
+    displayname?: string;
+  };
+  title?: string;
+  name?: string;
+  desc?: string;
+  count?: number;
+};
+
+type NotificationPopoverItemProps = {
+  index: number;
+  item: Item;
+  handleClickNotify: () => void;
+};
+
+const NotificationPopoverItem = ({
+  index,
+  item,
+  handleClickNotify,
+}: NotificationPopoverItemProps) => (
+  <div
+    key={index}
+    className="flex cursor-pointer px-4 py-3.5 transition hover:bg-gray-50"
+    onClick={() => handleClickNotify()}
+  >
+    <img
+      className="h-6 w-6 rounded-full object-cover"
+      src={item.sender?.photourl || "/images/logo-single.svg"}
+      alt=""
+    />
+    <div className="mx-3 min-w-0 flex-1">
+      <div className="break-words leading-tight">
+        <span className="mr-1 font-medium">
+          {item.sender?.displayname || "CrowdCore"}
+        </span>
+        {item.title}
+      </div>
+      {item?.desc && item.desc.length > 0 && (
+        <div className="ellipsis-2 mt-1 text-xs text-gray-600">{item.desc}</div>
+      )}
+    </div>
+    {item.count > 1 && (
+      <div className="text-xs leading-5 text-gray-500">+ {item.count}</div>
+    )}
+  </div>
+);
+
 const NotificationPopover = () => {
   const [isNotifyOpen, setIsNotifyOpen] = useState(false);
   const popoverRef = useRef<HTMLButtonElement>(null);
@@ -104,37 +153,11 @@ const NotificationPopover = () => {
                 >
                   {(data) =>
                     data?.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex cursor-pointer px-4 py-3.5 transition hover:bg-gray-50"
-                        onClick={() => handleClickNotify()}
-                      >
-                        <img
-                          className="h-6 w-6 rounded-full object-cover"
-                          src={
-                            item.sender?.photourl || "/images/logo-single.svg"
-                          }
-                          alt=""
-                        />
-                        <div className="mx-3 min-w-0 flex-1">
-                          <div className="break-words leading-tight">
-                            <span className="mr-1 font-medium">
-                              {item.sender?.displayname || "CrowdCore"}
-                            </span>
-                            {item.title}
-                          </div>
-                          {item?.desc && item.desc.length > 0 && (
-                            <div className="ellipsis-2 mt-1 text-xs text-gray-600">
-                              {item.desc}
-                            </div>
-                          )}
-                        </div>
-                        {item.count > 1 && (
-                          <div className="text-xs leading-5 text-gray-500">
-                            + {item.count}
-                          </div>
-                        )}
-                      </div>
+                      <NotificationPopoverItem
+                        item={item}
+                        index={index}
+                        handleClickNotify={handleClickNotify}
+                      />
                     ))
                   }
                 </InfiniteScroll>

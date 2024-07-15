@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { Accordion } from "@components/ui/accordion";
-import { Link, usePathname } from "@/navigation";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
 import { MergeHeaderProps } from "@components/merge-header/MergeHeader";
 
 interface MobileMenuProps extends MergeHeaderProps {
@@ -17,10 +15,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   handleAccordionChange,
   props,
 }) => {
-  const pathname = usePathname();
-  const selectedLayoutSegment = useSelectedLayoutSegment();
-  const t = useTranslations("navigation");
-
   useEffect(() => {
     if (showMobileMenu) {
       document.body.classList.add("overflow-hidden");

@@ -8,9 +8,8 @@ import {
   Transition,
 } from "@headlessui/react";
 import { LogOut, User } from "lucide-react";
-import { Link, usePathname, useRouter } from "@/navigation";
+import { Link } from "@/navigation";
 import Avvvatars from "avvvatars-react";
-import { useAuthStore } from "@store/auth";
 import cn from "classnames";
 import { useTranslations } from "next-intl";
 
@@ -34,8 +33,6 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
   manageOtherUser,
   isAdminManageOther,
 }) => {
-  const router = useRouter();
-  const pathname = usePathname();
   const t = useTranslations("navigation");
 
   const handleLogout = () => {

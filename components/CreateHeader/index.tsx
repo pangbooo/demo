@@ -6,7 +6,6 @@ import ProfileMenu from "./ProfileMenu";
 import Logo from "./Logo";
 import { useAuthStore } from "@store/auth";
 import { useUserProfile } from "@hooks/useUserProfile";
-import { useNotificationStore } from "@store/notification";
 import { useRouter } from "next/router";
 
 const CreatorHeader = () => {
@@ -19,7 +18,6 @@ const CreatorHeader = () => {
   const isAdminManageOther = useUserProfile(
     (state) => state.isAdminManageOther
   );
-  const [markReadAll] = useNotificationStore((state) => [state.markReadAll]);
 
   const manageOtherUser = () => {
     router.push("/admin/manage-other-user");
